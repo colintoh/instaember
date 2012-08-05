@@ -26,7 +26,7 @@
       <div class="navbar-inner">
         <div class="container">
         <script type="text/x-handlebars">
-            <button {{action add target="App.wallController"}}>Add</button>
+            <button class="pull-left nav btn" {{action add target="App.wallController"}}>Add</button>
             {{#view App.UserView}}
               <div id="welcome-msg" class="nav pull-right">
                 Welcome, <strong>{{content.full_name}}</strong>
