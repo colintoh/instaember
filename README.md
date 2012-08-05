@@ -1,1 +1,4 @@
-Download the ZIP to get started with Ember.js: <https://github.com/emberjs/starter-kit/downloads>
+instaember
+==========
+
+A pinterest-esque app built with Ember JS app and instagram API
