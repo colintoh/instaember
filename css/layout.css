@@ -1,0 +1,51 @@
+body {
+	background:url('../img/bg.gif');
+}
+
+.container-fluid {
+	padding-top:70px;
+}
+
+#profile-pic{
+	width:40px;
+	padding: 5px 0;
+}
+
+#welcome-msg{
+	line-height: 50px;
+	font-size: 14px;
+}
+
+#photo-list{
+	
+}
+	#photo-list li{
+		position:relative;
+		margin:5px;
+		list-style:none;
+		width:300px;
+		float:left;
+	}
+
+	#photo-list li.largeWidth{
+		width:610px;
+	}
+
+		#photo-list img{
+			box-sizing:border-box;
+		}
+
+		#photo-list li span{
+			position: absolute;
+			bottom: 5px;
+			left: 5px;
+			right:5px;
+			background: rgba(0, 0, 0, 0.5);
+			color: white;
+			font-weight: bold;
+			font-size: 18px;
+			padding: 5px 10px;
+			box-sizing: border-box;
+			text-align: center;
+			display: none;
+		}
