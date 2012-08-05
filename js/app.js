@@ -35,7 +35,10 @@ var App = Em.Application.create({
 						content: App.popularController.content
 					}).appendTo('#photo-list');
 					$('#photo-list').imagesLoaded(function(){
-						$('#photo-list').masonry('reload');
+						console.log('loaded');
+						setTimeout(function(){
+							$('#photo-list').masonry('reload');
+						},500);
 					});
 					App.popularController.content.setEach('rendered','true');
 
@@ -53,11 +56,11 @@ App.WallController = Em.Object.extend({
 	ele: '#photo-list',
 	inits: function(){
 		$(this.ele).on('mouseover','li',function(){
-			console.log('in');
+			// console.log('in');
 			$(this).find('span').fadeIn('500');
 		});
 		$(this.ele).on('mouseout','li',function(){
-			console.log('out');
+			// console.log('out');
 			$(this).find('span').fadeOut('300');
 		});
 		if(this.ele !== 'undefined'){
