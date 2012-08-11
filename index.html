@@ -22,11 +22,14 @@
   <![endif]-->
 </head>
 <body>
+  <div id="fetching-msg"><p>Fetching pictures...</p></div>
   <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
+          <!-- You can bind variables, events action and view inside. I have added user view here so that every time my user model is updated, it will auto reflect here. -->
         <script type="text/x-handlebars">
-            <button class="pull-left nav btn" {{action add target="App.wallController"}}>Add</button>
+            <button class="pull-left nav btn hidden" {{action "add" target="App.wallController"}}>Add More Pictures!</button>
+
             {{#view App.UserView}}
               <div id="welcome-msg" class="nav pull-right">
                 Welcome, <strong>{{content.full_name}}</strong>
@@ -40,7 +43,8 @@
       </div>
     </div> <!-- sidebar -->
   <div class="container-fluid">
-      <script type="text/x-handlebars" data-template-name="pop-tmpl">
+    <!-- If you append data-template-name to the script, it will not be shown in the html until it is created and appended in the JS file -->
+      <script type="text/x-handlebars" data-template-name="pop-tmpl"> 
         <ul id="photo-list">
         {{#each content}}
           {{#if imgWidth}}
@@ -55,6 +59,8 @@
         {{/each}}
         </ul>
       </script>
+
+
       <script type="text/x-handlebars" data-template-name="pop-list-tmpl">
         {{#with content}}
          {{#unless rendered}}
@@ -62,6 +68,9 @@
             <li class="item largeWidth"><img class="thumbnail" {{bindAttr src="images.standard_resolution.url"}}>
           {{else}}
             <li class="item"><img class="thumbnail" {{bindAttr src="images.standard_resolution.url"}}>
+          {{/if}}
+          {{#if caption.text}}
+          <span>{{caption.text}}</span>
           {{/if}}
          {{/unless}}
         {{/with}}

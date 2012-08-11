@@ -1,11 +1,10 @@
-//http://localhost/instaember/#access_token=52903.9efddfd.7e469ff880314cf4874f20c8eb6fca72
-
+/*Start your appication by calling the Em.Application Object*/
 var App = Em.Application.create({
 	accessToken:window.location.hash.split('=')[1],
 	clientId:"9efddfdec04a474f884d14f56cb287a5",
-	ready: function(){
+	ready: function(){ 	/* Executes when the DOM is ready */
 		App.wallController = App.WallController.create();
-		App.appManager = Em.StateManager.create({
+		App.appManager = Em.StateManager.create({ /* State Manager is created */
 			start:Em.State.create({
 				initialState: 'fetching',
 				fetching:Em.State.create({
@@ -26,19 +25,27 @@ var App = Em.Application.create({
 				}
 			}),
 			initFinish : Em.State.create({
+				enter:function(){
+					$('button').removeClass('hidden');
+					$('#fetching-msg').fadeOut('800');
+					$('.container-fluid').css({'display':'none','opacity':'1'}).fadeIn('800');
+				},
 				add:function(){
+					$('button').html('Fetching..');
 					App.popularController.refill();
 				},
 				wallRender:function(){
+					$('button').html('Add More Pictures!');
 					var listView = Em.View.create({
 						templateName:"pop-list-tmpl",
 						content: App.popularController.content
 					}).appendTo('#photo-list');
 					$('#photo-list').imagesLoaded(function(){
 						console.log('loaded');
+						$('#photo-list').masonry('reload');
 						setTimeout(function(){
 							$('#photo-list').masonry('reload');
-						},500);
+						},700);
 					});
 					App.popularController.content.setEach('rendered','true');
 
@@ -52,16 +59,20 @@ var App = Em.Application.create({
 
 
 
+
+
+
+/* Controller is created from the Em.Object */
 App.WallController = Em.Object.extend({
 	ele: '#photo-list',
-	inits: function(){
+	inits: function(){ /* Cannot call "init", because it will automatically execute when a instances of WallController is executed. Which in this case is not advisable because the HTML is not yet inserted when DOM is ready.*/
 		$(this.ele).on('mouseover','li',function(){
 			// console.log('in');
-			$(this).find('span').fadeIn('500');
+			$(this).find('span').stop(true,true).fadeIn('500');
 		});
 		$(this.ele).on('mouseout','li',function(){
 			// console.log('out');
-			$(this).find('span').fadeOut('300');
+			$(this).find('span').stop(true,true).fadeOut('500');
 		});
 		if(this.ele !== 'undefined'){
 			var $ele = $(this.ele);
@@ -71,9 +82,10 @@ App.WallController = Em.Object.extend({
 					columnWidth: 310,
 					isAnimated: true
 				});
+				App.appManager.transitionTo('initFinish');
 			});
 		}
-		App.appManager.transitionTo('initFinish');
+		
 	},
 	add: function(){
 		App.appManager.send('add');
@@ -101,6 +113,7 @@ App.userController = Em.Object.create({
 	}
 });
 
+// By adding the word "Binding" behind "content", we are binding the userController.content to UserView.content
 App.UserView = Em.View.extend({
 	contentBinding:"App.userController.content"
 });
@@ -127,6 +140,9 @@ App.popularController = Em.ArrayController.create({
 						return item1.id ==item.id;
 					});
 					if(!existBool){
+						if(item.likes.count > 5000){
+							item.imgWidth = true;
+						}
 						that.addObject(item);
 					}
 				});
@@ -138,8 +154,6 @@ App.popularController = Em.ArrayController.create({
 		});
 	}
 });
-
-	App.PopularModel = Em.Object.extend();
 
 	App.PopView = Em.View.extend({
 		content: [],

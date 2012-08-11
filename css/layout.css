@@ -4,6 +4,7 @@ body {
 
 .container-fluid {
 	padding-top:70px;
+	opacity:0;
 }
 
 #profile-pic{
@@ -49,3 +50,27 @@ body {
 			text-align: center;
 			display: none;
 		}
+
+#fetching-msg{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.9);
+	z-index: 1000;
+	display:table;
+	text-align: center;
+}
+
+	#fetching-msg p {
+		display: table-cell;
+		vertical-align: middle;
+		font-size: 30px;
+		color:white;
+		//-webkit-animation: flash 1s infinite;
+	}
+
+@-webkit-keyframes flash {
+	0%   { opacity: 0; }
+	50%  {opacity:1;}
+	100% { opacity: 0; }
+}
